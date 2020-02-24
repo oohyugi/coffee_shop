@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'feature/order/order_page.dart';
+import 'feature/menu/menu_page.dart';
+
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _MainPageState extends State<MainPage> {
     Center(
       child: Text("Home"),
     ),
-    OrderPage(),
+    MenuPage(),
     Center(
       child: Text("Search"),
     ),

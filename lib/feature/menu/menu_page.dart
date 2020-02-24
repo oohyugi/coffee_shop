@@ -1,20 +1,22 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:coffee_shop/feature/menu/menu_detail.dart';
 import 'package:coffee_shop/model/product_mdl.dart';
 import 'package:coffee_shop/widget/custom_tab_indicator.dart';
 import 'package:flutter/material.dart';
 
-class OrderPage extends StatefulWidget {
-  OrderPage({Key key}) : super(key: key);
+import '../../model/product_mdl.dart';
+
+class MenuPage extends StatefulWidget {
+  MenuPage({Key key}) : super(key: key);
 
   @override
-  _OrderPageState createState() {
-    return _OrderPageState();
+  _MenuPageState createState() {
+    return _MenuPageState();
   }
 }
 
-class _OrderPageState extends State<OrderPage>
+class _MenuPageState extends State<MenuPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _dragscrollController;
@@ -23,6 +25,7 @@ class _OrderPageState extends State<OrderPage>
   double _ITEM_HEIGHT = 70.0;
   bool isTapTab = false;
   double topPosition = 0;
+  bool isAddProduct = false;
 
   tabListener() {
     if (isTapTab) {
@@ -139,7 +142,7 @@ class _OrderPageState extends State<OrderPage>
   Container widgetProduct(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Color.fromRGBO(243, 245, 248, 1),
+          color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       child: Column(
@@ -180,7 +183,9 @@ class _OrderPageState extends State<OrderPage>
                       ),
                     );
                   } else if (item is ProductItem) {
-                    return ProductItemView(item: item);
+                    return ListTileItem(
+                      item: item,
+                    );
                   }
                 },
               ),
@@ -192,44 +197,114 @@ class _OrderPageState extends State<OrderPage>
   }
 }
 
-class ProductItemView extends StatelessWidget {
-  const ProductItemView({
-    Key key,
-    @required this.item,
-  }) : super(key: key);
-
+class ListTileItem extends StatefulWidget {
   final ProductItem item;
+
+  ListTileItem({Key key, this.item}) : super(key: key);
+
+  @override
+  _ListTileItemState createState() {
+    return _ListTileItemState();
+  }
+}
+
+class _ListTileItemState extends State<ListTileItem> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  int _itemCount = 0;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image.asset("assets/images/coffee_item.jpeg"),
+    final ProductItem item = widget.item;
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MenuDetailPage()));
+      },
+      child: ListTile(
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset("assets/images/coffee_item.jpeg"),
+        ),
+        title: Text(
+          item.name,
+          style: TextStyle(fontSize: 18),
+        ),
+        subtitle: Row(
+          children: <Widget>[
+            Text(
+              item.price,
+              style: TextStyle(color: Colors.black),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              item.price,
+              style: TextStyle(decoration: TextDecoration.lineThrough),
+            ),
+          ],
+        ),
+//      trailing:AnimatedContainer(
+//        duration: Duration(milliseconds: 256),
+//              child:  _itemCount == 0
+//                  ? ItemButtonWidget(
+//                title: "Add",
+//                onTap: () {
+//                  setState(() {
+////             isAddProduct = !isAddProduct;
+//                    _itemCount++;
+//                  });
+//
+//                  print(_itemCount);
+//                },
+//              ): CountingProductView(),
+//            )
+//          ,
       ),
-      title: Text(
-        item.name,
-        style: TextStyle(fontSize: 18),
-      ),
-      subtitle: Row(
-        children: <Widget>[
-          Text(
-            item.price,
-            style: TextStyle(color: Colors.black),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Text(
-            item.price,
-            style: TextStyle(decoration: TextDecoration.lineThrough),
-          ),
-        ],
-      ),
-      trailing: Container(
-        child: ItemButtonWidget(
-          title: "Add",
-          onTap: () {},
+    );
+  }
+
+  CountingProductView() {
+    return Container(
+      width: 80,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1)],
+          borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 4, top: 2, right: 4, bottom: 2),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Icon(
+              Icons.remove,
+              color: Theme.of(context).accentColor,
+            ),
+            Text(
+              "$_itemCount",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            InkWell(
+                onTap: () {
+                  setState(() {
+                    _itemCount++;
+                  });
+                },
+                child: Icon(
+                  Icons.add,
+                  color: Theme.of(context).accentColor,
+                )),
+          ],
         ),
       ),
     );
@@ -252,7 +327,7 @@ class ItemButtonWidget extends StatelessWidget {
       height: 24,
       minWidth: 42,
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       color: Theme.of(context).buttonColor,
       onPressed: onTap,
       child: Text(

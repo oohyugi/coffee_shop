@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             accentColor: Colors.pink,
-            primaryColor: Colors.pink,
+            primaryColor: Colors.white,
             buttonColor: Colors.pink),
         home: MainPage());
   }
