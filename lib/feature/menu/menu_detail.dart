@@ -8,11 +8,11 @@ class MenuDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return DetailScaffold(
-      hasPinnedAppBar: true,
+      hasPinnedAppBar: false,
       expandedHeight: 300,
       slivers: <Widget>[
         SliverAppBar(
-         pinned: true,
+         pinned: false,
           expandedHeight: 300,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(

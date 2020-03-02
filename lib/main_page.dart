@@ -1,7 +1,9 @@
+import 'package:coffee_shop/feature/menu/new_menu_page.dart';
+import 'package:coffee_shop/widget/banner.dart';
+import 'package:coffee_shop/widget/faq.dart';
 import 'package:flutter/material.dart';
 
 import 'feature/menu/menu_page.dart';
-
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -32,10 +34,19 @@ class _MainPageState extends State<MainPage> {
   int selectedIndex = 0;
 
   List<Widget> listBodyChildreen = [
-    Center(
-      child: Text("Home"),
-    ),
-    MenuPage(),
+    BannerView(imgUrls:[
+    "https://s4.bukalapak.com/rev-banner/flash_banner/579400114/original/desktop_TekaTekiMilyaran2_3dd03037-e9ae-478f-9f0d-b5312b8df414.jpeg.webp",
+      "https://s4.bukalapak.com/rev-banner/flash_banner/332189947/original/desktop_BorongAsikCumadiBukalapak_3d9e51f1-9216-45bd-9c3d-482af9a838a3.jpeg.webp",
+      "https://s4.bukalapak.com/rev-banner/flash_banner/386645172/original/desktop_SmartFrenConcert_a7bc6049-5a61-4781-975e-cf2f3a4dce00.jpeg.webp"
+    ],onTapBanner: (){
+      print("clicked");
+    },),
+    FaqView(titleHeader: "Pertanyaan Populer",faqItems: [
+      FaqItemData("Bagaimana cara melakukan pendanaan ?", "assets/images/coffee_item.jpeg"),
+      FaqItemData("Bagaimana cara melakukan pendanaan ?", "assets/images/coffee_item.jpeg"),
+      FaqItemData("Bagaimana cara melakukan pendanaan ?", "assets/images/coffee_item.jpeg"),
+      FaqItemData("Bagaimana cara melakukan pendanaan ?", "assets/images/coffee_item.jpeg"),
+    ],),
     Center(
       child: Text("Search"),
     ),

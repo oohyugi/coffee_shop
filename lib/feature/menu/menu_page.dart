@@ -1,8 +1,9 @@
 import 'dart:async';
 
+import 'package:coffee_shop/feature/menu/bloc/menu_bloc.dart';
 import 'package:coffee_shop/feature/menu/menu_detail.dart';
 import 'package:coffee_shop/model/product_mdl.dart';
-import 'package:coffee_shop/widget/custom_tab_indicator.dart';
+import 'package:coffee_shop/widget/indicator/custom_tab_indicator.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/product_mdl.dart';
@@ -18,6 +19,8 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage>
     with SingleTickerProviderStateMixin {
+
+  MenuBloc bloc = MenuBloc();
   TabController _tabController;
   ScrollController _dragscrollController;
   List<CategoryItemMdl> categoryList = List();
@@ -38,7 +41,7 @@ class _MenuPageState extends State<MenuPage>
   }
 
   _animateToIndex(i) => _dragscrollController.animateTo((_ITEM_HEIGHT * i),
-      duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+      duration: Duration(milliseconds: 245), curve: Curves.fastLinearToSlowEaseIn);
 
   listScrollListener() {
     //switch to tab index
